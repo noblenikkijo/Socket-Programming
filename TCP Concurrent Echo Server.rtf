@@ -1,0 +1,181 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 CourierNewPSMT;
+\f3\froman\fcharset0 Times-BoldItalic;\f4\fmodern\fcharset0 Courier-BoldOblique;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue0;\red236\green186\blue254;
+}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;\csgray\c0\c0;\cssrgb\c94438\c78969\c99727;
+}
+\margl1440\margr1440\vieww17600\viewh21840\viewkind0
+\deftab720
+\pard\pardeftab720\ri0\sb100\sa100\partightenfactor0
+
+\f0\fs20 \cf2 \cb3 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 #include\'a0<stdlib.h>
+\f0 \
+
+\f1 #include\'a0<stdio.h>
+\f0 \
+
+\f1 #include\'a0<sys/types.h>
+\f0 \
+
+\f1 #include\'a0<sys/socket.h>
+\f0 \
+
+\f1 #include\'a0<netinet/in.h>
+\f0 \
+
+\f1 #include\'a0<string.h>
+\f0 \
+
+\f1 #include\'a0<unistd.h>
+\f0 \
+\
+
+\f1 #define\'a0MAXLINE\'a04096\'a0
+\f0 \
+
+\f1 #define\'a0SERV_PORT\'a03000\'a0
+\f0 \
+
+\f1 #define\'a0LISTENQ\'a08\'a0
+\f0 \
+\
+
+\f1 int\'a0main\'a0(int\'a0argc,\'a0char\'a0**argv)
+\f0 \
+
+\f1 \{
+\f0 \
+
+\f1 \'a0int\'a0listenfd,\'a0connfd,\'a0n;
+\f0 \
+
+\f1 \'a0pid_t\'a0pid;
+\f0 \
+
+\f1 \'a0socklen_t\'a0clilen;
+\f0 \
+
+\f1 \'a0char\'a0buf[MAXLINE];
+\f0 \
+
+\f1 \'a0struct\'a0sockaddr_in\'a0cliaddr,\'a0servaddr;
+\f0 \
+\
+\
+
+\f1 \'a0if\'a0((listenfd\'a0=\'a0socket\'a0(AF_INET,\'a0SOCK_STREAM,\'a00))\'a0<0)\'a0\{
+\f0 \
+
+\f1 \'a0\'a0perror("Problem\'a0in\'a0creating\'a0the\'a0socket");
+\f0 \
+
+\f1 \'a0\'a0exit(2);
+\f0 \
+
+\f1 \'a0\}\
+\
+\pard\pardeftab720\ri0\partightenfactor0
+
+\f2\fs20 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0  /***fill\'a0the\'a0socket\'a0address\'a0with\'a0server\'92s\'a0well\'a0known\'a0port***/
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\partightenfactor0
+
+\f3\i\b \cf2 \
+
+\f4 \'a0\cb4 servaddr.sin_family\'a0=\'a0AF_INET;
+\f3 \cb3 \
+
+\f4 \'a0\cb4 servaddr.sin_addr.s_addr\'a0=\'a0htonl(INADDR_ANY);
+\f3 \cb3 \
+
+\f4 \'a0\cb4 servaddr.sin_port\'a0=\'a0htons(SERV_PORT);
+\f0\i0\b0 \cb3 \
+\
+
+\f1 \'a0
+\f0 \
+
+\f1 \'a0bind\'a0(listenfd,\'a0(struct\'a0sockaddr\'a0*)\'a0&servaddr,\'a0sizeof(servaddr));
+\f0 \
+
+\f1 \'a0listen\'a0(listenfd,\'a0LISTENQ);
+\f0 \
+\
+
+\f1 \'a0printf("%s\\n","Server\'a0running...waiting\'a0for\'a0connections.");
+\f0 \
+\
+
+\f1 \'a0for\'a0(\'a0;\'a0;\'a0)\'a0\{
+\f0 \
+\
+
+\f4\i\b \'a0\'a0\cb4 clilen\'a0=\'a0sizeof(cliaddr);
+\f3 \cb3 \
+
+\f4 \'a0\'a0
+\f1\i0\b0 connfd\'a0=\'a0accept\'a0(listenfd,\'a0(struct\'a0sockaddr\'a0*)\'a0&cliaddr,\'a0&clilen);
+\f0 \
+\
+
+\f1 \'a0\'a0printf("%s\\n","Received\'a0request...");
+\f0 \
+\
+
+\f1 \'a0\'a0if\'a0(\'a0(pid\'a0=\'a0fork\'a0())\'a0==\'a00\'a0)\'a0\{\
+\pard\pardeftab720\ri0\partightenfactor0
+
+\f2\fs20 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 	/***process\'a0the\'a0request\'a0doing\'a0something\'a0using\'a0connfd\'a0***/
+\f0 \uc0\u8232 
+\f2 \'a0\'a0\'a0\'a0\'a0\'a0/*\'a0.................\'a0*/
+\f0\fs24 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \'a0\'a0
+\f4\i\b \cb4 printf\'a0("%s\\n","Child\'a0created\'a0for\'a0dealing\'a0with\'a0client\'a0requests");
+\f0\i0\b0 \cb3 \
+
+\f1 \'a0\'a0close\'a0(listenfd);
+\f0 \
+
+\f1 \'a0
+\f4\i\b \'a0\cb4 while\'a0(\'a0(n\'a0=\'a0recv(connfd,\'a0buf,\'a0MAXLINE,0))\'a0>\'a00)\'a0\'a0\{
+\f3 \cb3 \
+
+\f4 \'a0\'a0\'a0\cb4 printf("%s","String\'a0received\'a0from\'a0and\'a0resent\'a0to\'a0the\'a0client:");
+\f3 \cb3 \
+
+\f4 \cb4 \'a0\'a0\'a0puts(buf);
+\f3 \cb3 \
+
+\f4 \cb4 \'a0\'a0\'a0send(connfd,\'a0buf,\'a0n,\'a00);
+\f3 \cb3 \
+
+\f4 \'a0\'a0\}
+\f0\i0\b0 \
+\
+
+\f1 \'a0\'a0
+\f0 \
+
+\f1 \'a0\'a0exit(0);
+\f0 \
+
+\f1 \'a0\}
+\f0 \
+\
+
+\f1 \'a0close(connfd);
+\f0 \
+
+\f1 \}
+\f0 \
+
+\f1 \}}
